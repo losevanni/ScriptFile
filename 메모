@@ -1,0 +1,3 @@
+chproxy 의경우 New-BurntToastNotification 모듈을 import 하지 않으면 실행은 되어도 알림창에 뜨지 않음
+NEXT PLAN 
+1. chproxy:사용자의 입력값을 매게변수든 중간에 입력받는 방식이든 ip port 를 입력 받으면 그 프록시로 설정하고 없으면 디폴트로 127로 실행 되도록 마들기
