@@ -1,16 +1,24 @@
 param ( # 실행시 인수로 option 과 파일경로,명 넣기
     [string]$Option,
-    [string]$Path
+    [string]$Name,
+    [string]$Path    
 )
+if($Path){
 
-Write-Host "input Option:$Option & Path:$Path"
+}else{
+    $Path='.'
+}
+
+
 
 if($Option -ceq 'u' -or $Option -ceq '-u'){
     #업로드
-    scp.exe $Path testserver_v:/home/vanni/shareFile
+    Write-Host "input Option:$Option & Path:$Name & Upload:ShareFile"
+    scp.exe $Name testserver_v:/home/vanni/shareFile
 }elseif ($Option -ceq 'd' -or $Option -ceq '-d') {
     #다운로드
-    scp.exe testserver_v:/home/vanni/shareFile/$Path .
+    Write-Host "input Option:$Option & Path:$Name & Down:$Path"
+    scp.exe testserver_v:/home/vanni/shareFile/$Name $Path
 }else{
     Write-Host "fail please up or down"
 }
