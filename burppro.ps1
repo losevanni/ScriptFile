@@ -13,3 +13,4 @@ function startburp {
         -WindowStyle Hidden `
 }
 startburp
+# **잊지 말자 스크립트는 환경변수에 등록한 경로가 아니면 실행 할수없다**
