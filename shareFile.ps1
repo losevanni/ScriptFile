@@ -14,11 +14,14 @@ if($Path){
 if($Option -ceq 'u' -or $Option -ceq '-u'){
     #업로드
     Write-Host "input Option:$Option & Path:$Name & Upload:ShareFile"
-    scp.exe $Name testserver_v:/home/vanni/shareFile
+    scp.exe $Name vanni:/home/vanni/shareFile
 }elseif ($Option -ceq 'd' -or $Option -ceq '-d') {
     #다운로드
     Write-Host "input Option:$Option & Path:$Name & Down:$Path"
-    scp.exe testserver_v:/home/vanni/shareFile/$Name $Path
+    if(!$Path){
+        $Path='.'
+    }
+    scp.exe vanni:/home/vanni/shareFile/$Name $Path
 }else{
     Write-Host "fail please up or down"
 }
