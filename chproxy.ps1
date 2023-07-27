@@ -8,7 +8,7 @@ function proxyOnOff {
         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" -Name ProxyEnable -Value 1
         $ret=Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' | Select-Object ProxyServer
         Write-Host "$ret Proxy On"
-        New-BurntToastNotification -Text "ProxyOnOff",'proxy set On'
+        New-BurntToastNotification -Text "ProxyOnOff",$ret' ON'
         return "proxy set On"
     }elseif ($value.ProxyEnable -eq 1) {
         Write-Host "proxy Off"
@@ -31,10 +31,11 @@ function setvalue{
             $PORT='8888'
         }
         Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" -Name ProxyServer -Value "${IP}:${PORT}"
+        New-BurntToastNotification -Text "Proxy Set IP, PORT",${IP}':'${PORT}' 설정 완료'
         Write-Host "${IP}:${PORT} 설정"
     }
 }
-function catset {
+function catinfo {
     $SETINFO=Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" | Select-Object ProxyEnable
     $IPPORTINFO=Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" | Select-Object ProxyServer
     Write-Host "$SETINFO $IPPORTINFO 설정"
@@ -43,8 +44,10 @@ function catset {
 if(!$Option){ # null 이면 on off
     proxyOnOff
 }elseif($Option -eq 'i'){ # 설정 보여주기
-    catset
+    catinfo
 }else{ # ip port 설정
     setvalue
 }
+
+# next catset -> info 이름 변경 , 번트토스트에 ip port 번호 나올수있게 수정 하기
     
