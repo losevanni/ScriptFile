@@ -8,14 +8,15 @@ function proxyOnOff {
     if ($value.ProxyEnable -eq 0) { # off 라면 키기
         Set-ItemProperty -Path $NETPATH -Name ProxyEnable -Value 1
         $ret=Get-ItemProperty -Path $NETPATH | Select-Object ProxyServer
-        Write-Host "$ret Proxy On"
-        New-BurntToastNotification -Text "ProxyOnOff",$ret' ON'
-        return "proxy set On"
+        $ret=$ret[0].ProxyServer
+        Write-Host "Proxy ON"$ret
+        New-BurntToastNotification -Text "ProxyON","$ret"
+        return "proxy set ON"
     }elseif ($value.ProxyEnable -eq 1) {
-        Write-Host "proxy Off"
+        Write-Host "proxy OFF"
         Set-ItemProperty -Path $NETPATH -Name ProxyEnable -Value 0
-        New-BurntToastNotification -Text "ProxyOnOff",'proxy set Off'
-        return "proxy set Off"
+        New-BurntToastNotification -Text "ProxyOFF",'OFF'
+        return "proxy set OFF"
     }
 }
 function setvalue{
@@ -38,7 +39,17 @@ function setvalue{
 function catinfo {
     $SETINFO=Get-ItemProperty -Path $NETPATH | Select-Object ProxyEnable
     $IPPORTINFO=Get-ItemProperty -Path $NETPATH | Select-Object ProxyServer
-    Write-Host "$SETINFO $IPPORTINFO 설정"
+    $Over=Get-ItemProperty -Path $NETPATH | Select-Object ProxyOverride
+    if($SETINFO[0].ProxyServer -eq 1){
+        Write-Host "Proxy SET: ON"
+    }else{
+        Write-Host "Proxy SET: OFF"
+    }
+    Write-Host "IP PORT :"$IPPORTINFO[0].ProxyServer
+    # Override 도 표시 이것 때문에 안잡힌 적이 있음
+    if($Over[0].ProxyOverride){ 
+        Write-Host "ProxyOverride :"$Over 
+    }
 }
 
 if(!$Option){ # null 이면 on off
