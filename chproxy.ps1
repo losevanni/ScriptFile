@@ -40,7 +40,7 @@ function catinfo {
     $SETINFO=Get-ItemProperty -Path $NETPATH | Select-Object ProxyEnable
     $IPPORTINFO=Get-ItemProperty -Path $NETPATH | Select-Object ProxyServer
     $Over=Get-ItemProperty -Path $NETPATH | Select-Object ProxyOverride
-    if($SETINFO[0].ProxyServer -eq 1){
+    if($SETINFO[0].ProxyEnable -eq 1){
         Write-Host "Proxy SET: ON"
     }else{
         Write-Host "Proxy SET: OFF"
