@@ -10,13 +10,13 @@ function proxyOnOff {
         $ret=Get-ItemProperty -Path $NETPATH | Select-Object ProxyServer
         $ret=$ret[0].ProxyServer
         Write-Host "Proxy ON"$ret
-        New-BurntToastNotification -Text "ProxyON","$ret"
-        return "proxy set ON"
+        New-BurntToastNotification -Text "ON","Proxy $ret"
+        return 1
     }elseif ($value.ProxyEnable -eq 1) {
         Write-Host "proxy OFF"
         Set-ItemProperty -Path $NETPATH -Name ProxyEnable -Value 0
-        New-BurntToastNotification -Text "ProxyOFF",'OFF'
-        return "proxy set OFF"
+        New-BurntToastNotification -Text "OFF",'Proxy OFF'
+        return 0
     }
 }
 function setvalue{
